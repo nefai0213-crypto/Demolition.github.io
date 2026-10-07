@@ -5,86 +5,295 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>부산 상가 철거·원상복구 견적 문의</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#f5f6f8;color:#202124;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Noto Sans KR",sans-serif}
-.wrap{max-width:720px;margin:0 auto;padding:18px}.card{background:#fff;border-radius:16px;padding:24px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
-h1{font-size:25px;line-height:1.35;margin:0 0 12px}.lead{color:#666;line-height:1.65;margin-bottom:24px}
-label{display:block;font-weight:700;margin:22px 0 8px}.required{color:#d93025}
+*{box-sizing:border-box}
+body{margin:0;background:#f5f6f8;color:#202124;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Noto Sans KR",sans-serif}
+.wrap{max-width:720px;margin:0 auto;padding:18px}
+.card{background:#fff;border-radius:16px;padding:24px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+h1{font-size:25px;line-height:1.35;margin:0 0 12px}
+.lead{color:#666;line-height:1.65;margin-bottom:24px}
+label{display:block;font-weight:700;margin:22px 0 8px}
+.required{color:#d93025}
 input,select,textarea{width:100%;border:1px solid #d8dadd;border-radius:10px;padding:13px;font-size:16px;background:#fff}
-textarea{min-height:110px;resize:vertical}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.choice{display:flex;align-items:center;gap:9px;border:1px solid #ddd;border-radius:10px;padding:11px;cursor:pointer;font-weight:400;margin:0}.choice input{width:auto}
-.small{font-size:13px;color:#777;line-height:1.55}.consent{background:#f8f9fa;border-radius:10px;padding:14px;margin-top:22px}
+textarea{min-height:110px;resize:vertical}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choice{display:flex;align-items:center;gap:9px;border:1px solid #ddd;border-radius:10px;padding:11px;cursor:pointer;font-weight:400;margin:0}
+.choice input{width:auto}
+.small{font-size:13px;color:#777;line-height:1.55}
+.consent{background:#f8f9fa;border-radius:10px;padding:14px;margin-top:22px}
 button{width:100%;margin-top:24px;border:0;border-radius:11px;padding:15px;font-size:17px;font-weight:700;cursor:pointer;background:#202124;color:white}
-button:disabled{opacity:.5;cursor:not-allowed}.hidden{display:none}#result{padding:24px;text-align:center}.code{font-size:28px;font-weight:800;margin:16px 0}.error{color:#b00020;margin-top:12px}
-#submitFrame{display:none}@media(max-width:520px){.grid{grid-template-columns:1fr}.card{padding:18px}h1{font-size:22px}}
+button:disabled{opacity:.5;cursor:not-allowed}
+.hidden{display:none}
+#result{padding:24px;text-align:center}
+.code{font-size:28px;font-weight:800;margin:16px 0}
+.error{color:#b00020;margin-top:12px}
+.status{font-size:13px;color:#666;margin-top:10px;text-align:center}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.card{padding:18px}h1{font-size:22px}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<div class="card" id="formCard">
-<h1>부산 상가 철거·원상복구 견적 문의</h1>
-<div class="lead">상가 철거 또는 원상복구가 필요하신가요?<br>현장 정보를 남겨주시면 확인 후 철거 전문업체에 견적 상담을 연결해드립니다.<br><span class="small">※ 실제 견적 금액은 현장 상황과 철거 범위 확인 후 결정될 수 있습니다.</span></div>
+  <div class="card" id="formCard">
+    <h1>부산 상가 철거·원상복구 견적 문의</h1>
+    <div class="lead">
+      상가 철거 또는 원상복구가 필요하신가요?<br>
+      현장 정보를 남겨주시면 확인 후 철거 전문업체에 견적 상담을 연결해드립니다.<br>
+      <span class="small">※ 실제 견적 금액은 현장 상황과 철거 범위 확인 후 결정될 수 있습니다.</span>
+    </div>
 
-<form id="leadForm" method="POST" action="https://script.google.com/macros/s/AKfycbwhTQpQmdrXuXsxzOr6JGmOACmSrNF0Qc2pDh3UOWBU6DRhXMjlUEvqd6fafHnO73c/exec" target="submitFrame">
-<input type="hidden" name="demolitionText" id="demolitionText">
+    <!-- 중요: 아래 URL은 배포된 Apps Script 웹앱의 /exec 주소로 바꿔주세요. -->
+    <form id="leadForm"
+          method="POST"
+          action="https://script.google.com/macros/s/AKfycbwhTQpQmdrXuXsxzOr6JGmOACmSrNF0Qc2pDh3UOWBU6DRhXMjlUEvqd6fafHnO73c/exec"
+          target="submitFrame"
+          enctype="application/x-www-form-urlencoded">
 
-<label>철거하실 지역 <span class="required">*</span></label>
-<select name="region" required><option value="">선택해주세요</option><option>부산진구</option><option>동래구</option><option>연제구</option><option>남구</option><option>해운대구</option><option>수영구</option><option>금정구</option><option>사상구</option><option>사하구</option><option>서구</option><option>중구</option><option>영도구</option><option>북구</option><option>강서구</option><option>기장군</option><option>기타</option></select>
+      <label>철거하실 지역 <span class="required">*</span></label>
+      <select name="region" required>
+        <option value="">선택해주세요</option>
+        <option>부산진구</option><option>동래구</option><option>연제구</option>
+        <option>남구</option><option>해운대구</option><option>수영구</option>
+        <option>금정구</option><option>사상구</option><option>사하구</option>
+        <option>서구</option><option>중구</option><option>영도구</option>
+        <option>북구</option><option>강서구</option><option>기장군</option><option>기타</option>
+      </select>
 
-<label>정확한 현장 주소 <span class="required">*</span></label><input name="address" required placeholder="예: 부산진구 서면 ○○길 00">
-<label>현재 업종 <span class="required">*</span></label><select name="businessType" required><option value="">선택해주세요</option><option>음식점</option><option>카페</option><option>주점</option><option>미용실·헤어샵</option><option>사무실</option><option>의류·소매점</option><option>학원</option><option>병원·의원</option><option>기타</option></select>
-<label>매장 규모 <span class="required">*</span></label><select name="size" required><option value="">선택해주세요</option><option>10평 이하</option><option>10~20평</option><option>20~30평</option><option>30~50평</option><option>50~100평</option><option>100평 이상</option><option>잘 모르겠습니다</option></select>
+      <label>정확한 현장 주소 <span class="required">*</span></label>
+      <input name="address" required placeholder="예: 부산진구 서면 ○○길 00">
 
-<label>필요한 철거 <span class="required">*</span></label>
-<div class="grid">
-<label class="choice"><input type="checkbox" name="demolition" value="내부 전체 철거"> 내부 전체 철거</label>
-<label class="choice"><input type="checkbox" name="demolition" value="인테리어 철거"> 인테리어 철거</label>
-<label class="choice"><input type="checkbox" name="demolition" value="천장 철거"> 천장 철거</label>
-<label class="choice"><input type="checkbox" name="demolition" value="바닥 철거"> 바닥 철거</label>
-<label class="choice"><input type="checkbox" name="demolition" value="벽체 철거"> 벽체 철거</label>
-<label class="choice"><input type="checkbox" name="demolition" value="주방 철거"> 주방 철거</label>
-<label class="choice"><input type="checkbox" name="demolition" value="화장실 철거"> 화장실 철거</label>
-<label class="choice"><input type="checkbox" name="demolition" value="간판 철거"> 간판 철거</label>
-<label class="choice"><input type="checkbox" name="demolition" value="집기·가구 철거"> 집기·가구 철거</label>
-<label class="choice"><input type="checkbox" name="demolition" value="폐기물 처리"> 폐기물 처리</label>
-<label class="choice"><input type="checkbox" name="demolition" value="원상복구"> 원상복구</label>
-<label class="choice"><input type="checkbox" name="demolition" value="기타"> 기타</label>
+      <label>현재 업종 <span class="required">*</span></label>
+      <select name="businessType" required>
+        <option value="">선택해주세요</option>
+        <option>음식점</option><option>카페</option><option>주점</option>
+        <option>미용실·헤어샵</option><option>사무실</option>
+        <option>의류·소매점</option><option>학원</option><option>병원·의원</option><option>기타</option>
+      </select>
+
+      <label>매장 규모 <span class="required">*</span></label>
+      <select name="size" required>
+        <option value="">선택해주세요</option>
+        <option>10평 이하</option><option>10~20평</option><option>20~30평</option>
+        <option>30~50평</option><option>50~100평</option><option>100평 이상</option>
+        <option>잘 모르겠습니다</option>
+      </select>
+
+      <label>필요한 철거 <span class="required">*</span></label>
+      <div class="grid">
+        <label class="choice"><input type="checkbox" name="demolition" value="내부 전체 철거"> 내부 전체 철거</label>
+        <label class="choice"><input type="checkbox" name="demolition" value="인테리어 철거"> 인테리어 철거</label>
+        <label class="choice"><input type="checkbox" name="demolition" value="천장 철거"> 천장 철거</label>
+        <label class="choice"><input type="checkbox" name="demolition" value="바닥 철거"> 바닥 철거</label>
+        <label class="choice"><input type="checkbox" name="demolition" value="벽체 철거"> 벽체 철거</label>
+        <label class="choice"><input type="checkbox" name="demolition" value="주방 철거"> 주방 철거</label>
+        <label class="choice"><input type="checkbox" name="demolition" value="화장실 철거"> 화장실 철거</label>
+        <label class="choice"><input type="checkbox" name="demolition" value="간판 철거"> 간판 철거</label>
+        <label class="choice"><input type="checkbox" name="demolition" value="집기·가구 철거"> 집기·가구 철거</label>
+        <label class="choice"><input type="checkbox" name="demolition" value="폐기물 처리"> 폐기물 처리</label>
+        <label class="choice"><input type="checkbox" name="demolition" value="원상복구"> 원상복구</label>
+        <label class="choice"><input type="checkbox" name="demolition" value="기타"> 기타</label>
+      </div>
+
+      <label>철거 예정 시기 <span class="required">*</span></label>
+      <select name="schedule" required>
+        <option value="">선택해주세요</option>
+        <option>최대한 빠르게</option><option>1주 이내</option><option>2~4주 이내</option>
+        <option>1~2개월 이내</option><option>2개월 이후</option><option>아직 미정</option>
+      </select>
+
+      <label>현장 사진 <span class="small">(선택)</span></label>
+      <input type="file" id="photos" accept="image/*" multiple>
+      <div class="small">사진은 최대 3장입니다. 전송 전에 브라우저에서 자동으로 압축합니다.</div>
+
+      <label>추가 설명 <span class="small">(선택)</span></label>
+      <textarea name="notes" placeholder="엘리베이터 사용 가능 여부, 철거 범위, 폐기물 양 등을 적어주세요."></textarea>
+
+      <label>성함 <span class="required">*</span></label>
+      <input name="name" required autocomplete="name">
+
+      <label>휴대전화 번호 <span class="required">*</span></label>
+      <input name="phone" required inputmode="tel" placeholder="010-0000-0000" autocomplete="tel">
+
+      <div class="consent">
+        <label style="margin:0 0 8px">
+          개인정보 수집·이용 및 제3자 제공 동의 <span class="required">*</span>
+        </label>
+        <div class="small">
+          수집항목: 성함, 연락처, 현장 주소 및 견적 상담에 필요한 현장 정보<br>
+          이용목적: 상가 철거·원상복구 견적 상담 및 관련 업체 연결<br>
+          제공받는 자: 해당 지역의 철거·원상복구 견적을 진행하는 협력업체<br>
+          제공목적: 견적 상담 및 현장 확인<br>
+          보유·이용기간: 상담 및 업체 연결 목적 달성 후 관련 법령에 따라 필요한 기간을 제외하고 지체 없이 파기합니다.
+        </div>
+        <label class="choice" style="margin-top:12px">
+          <input type="checkbox" name="consent" value="on" required> 동의합니다.
+        </label>
+      </div>
+
+      <!-- 사진은 JS가 아래 hidden 필드로 변환합니다. -->
+      <div id="photoFields"></div>
+
+      <button id="submitBtn" type="submit">견적 상담 신청하기</button>
+      <div id="error" class="error"></div>
+      <div id="status" class="status"></div>
+    </form>
+  </div>
+
+  <div class="card hidden" id="result">
+    <h1>견적 문의가 접수되었습니다.</h1>
+    <p>접수번호</p>
+    <div class="code" id="leadId"></div>
+    <p>입력해주신 현장 정보를 확인한 후 견적 상담을 진행할 수 있도록 전달하겠습니다.</p>
+    <p class="small">실제 견적 금액은 현장 상황과 철거 범위 확인 후 결정될 수 있습니다.</p>
+  </div>
 </div>
 
-<label>철거 예정 시기 <span class="required">*</span></label><select name="schedule" required><option value="">선택해주세요</option><option>최대한 빠르게</option><option>1주 이내</option><option>2~4주 이내</option><option>1~2개월 이내</option><option>2개월 이후</option><option>아직 미정</option></select>
-<label>추가 설명 <span class="small">(선택)</span></label><textarea name="notes" placeholder="엘리베이터 사용 가능 여부, 철거 범위, 폐기물 양 등을 적어주세요."></textarea>
-<label>성함 <span class="required">*</span></label><input name="name" required autocomplete="name">
-<label>휴대전화 번호 <span class="required">*</span></label><input name="phone" required inputmode="tel" placeholder="010-0000-0000" autocomplete="tel">
-
-<div class="consent"><label style="margin:0 0 8px">개인정보 수집·이용 및 제3자 제공 동의 <span class="required">*</span></label>
-<div class="small">수집항목: 성함, 연락처, 현장 주소 및 견적 상담에 필요한 현장 정보<br>이용목적: 상가 철거·원상복구 견적 상담 및 관련 업체 연결<br>제공받는 자: 해당 지역의 철거·원상복구 견적을 진행하는 협력업체<br>제공목적: 견적 상담 및 현장 확인</div>
-<label class="choice" style="margin-top:12px"><input type="checkbox" name="consent" required> 동의합니다.</label></div>
-
-<button id="submitBtn" type="submit">견적 상담 신청하기</button><div id="error" class="error"></div>
-</form></div>
-
-<div class="card hidden" id="result"><h1>견적 문의가 접수되었습니다.</h1><p>접수번호</p><div class="code" id="leadId"></div><p>입력하신 정보를 확인 후 견적 상담을 진행할 수 있도록 전달하겠습니다.</p></div>
-<iframe name="submitFrame" id="submitFrame"></iframe>
-</div>
+<iframe name="submitFrame" id="submitFrame" style="display:none"></iframe>
 
 <script>
-const form=document.getElementById("leadForm"),btn=document.getElementById("submitBtn"),error=document.getElementById("error");
-form.addEventListener("submit",function(e){
-  const selected=[...document.querySelectorAll('input[name="demolition"]:checked')].map(x=>x.value);
-  error.textContent="";
-  if(!selected.length){e.preventDefault();error.textContent="필요한 철거 항목을 하나 이상 선택해주세요.";return;}
-  document.getElementById("demolitionText").value=selected.join(", ");
-  btn.disabled=true;btn.textContent="접수 중...";
+const form = document.getElementById("leadForm");
+const btn = document.getElementById("submitBtn");
+const errorBox = document.getElementById("error");
+const statusBox = document.getElementById("status");
+const photoInput = document.getElementById("photos");
+const photoFields = document.getElementById("photoFields");
+const frame = document.getElementById("submitFrame");
+
+let submitting = false;
+
+function setHidden(name, value) {
+  const input = document.createElement("input");
+  input.type = "hidden";
+  input.name = name;
+  input.value = value;
+  photoFields.appendChild(input);
+}
+
+function resizeImage(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const max = 1400;
+        let w = img.width, h = img.height;
+        if (Math.max(w, h) > max) {
+          if (w >= h) { h = Math.round(h * max / w); w = max; }
+          else { w = Math.round(w * max / h); h = max; }
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = w; canvas.height = h;
+        canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+        const dataUrl = canvas.toDataURL("image/jpeg", 0.72);
+        resolve({
+          name: file.name.replace(/\.[^.]+$/, "") + ".jpg",
+          mimeType: "image/jpeg",
+          data: dataUrl.split(",")[1]
+        });
+      };
+      img.onerror = reject;
+      img.src = reader.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function showResult(leadId) {
+  document.getElementById("leadId").textContent = leadId || "접수 완료";
+  document.getElementById("formCard").classList.add("hidden");
+  document.getElementById("result").classList.remove("hidden");
+  window.scrollTo(0, 0);
+}
+
+/*
+ * Apps Script가 iframe 안에서 보내는 결과를 받습니다.
+ * 다른 사이트의 postMessage는 받지 않도록 origin은 Google 계열로만 허용합니다.
+ */
+window.addEventListener("message", event => {
+  const data = event.data;
+  if (!data || data.source !== "busan-demolition") return;
+
+  submitting = false;
+  btn.disabled = false;
+  btn.textContent = "견적 상담 신청하기";
+  statusBox.textContent = "";
+
+  if (data.ok) {
+    showResult(data.leadId);
+  } else {
+    errorBox.textContent = data.message || "접수에 실패했습니다.";
+  }
 });
-window.addEventListener("message",function(event){
-  const data=event.data;
-  if(!data||typeof data!=="object"||typeof data.ok!=="boolean")return;
-  if(data.ok){
-    document.getElementById("leadId").textContent=data.leadId||"";
-    document.getElementById("formCard").classList.add("hidden");
-    document.getElementById("result").classList.remove("hidden");
-  }else{
-    error.textContent=data.message||"접수 중 오류가 발생했습니다.";
-    btn.disabled=false;btn.textContent="견적 상담 신청하기";
+
+form.addEventListener("submit", async event => {
+  if (submitting) {
+    event.preventDefault();
+    return;
+  }
+
+  errorBox.textContent = "";
+  statusBox.textContent = "";
+
+  const demolitions = [...document.querySelectorAll('input[name="demolition"]:checked')];
+  if (!demolitions.length) {
+    event.preventDefault();
+    errorBox.textContent = "필요한 철거 항목을 하나 이상 선택해주세요.";
+    return;
+  }
+
+  const files = [...photoInput.files].slice(0, 3);
+
+  /*
+   * 파일을 hidden input으로 바꿔서 application/x-www-form-urlencoded POST로 보냅니다.
+   * 사진은 브라우저에서 압축하므로 원본 5MB 파일을 그대로 전송하지 않습니다.
+   */
+  event.preventDefault();
+  submitting = true;
+  btn.disabled = true;
+  btn.textContent = "접수 준비 중...";
+  photoFields.innerHTML = "";
+
+  try {
+    setHidden("demolitionText", demolitions.map(x => x.value).join(", "));
+
+    if (files.length) {
+      statusBox.textContent = "사진을 압축하고 있습니다...";
+      setHidden("photoCount", String(files.length));
+
+      for (let i = 0; i < files.length; i++) {
+        const p = await resizeImage(files[i]);
+        setHidden("photoName" + i, p.name);
+        setHidden("photoMime" + i, p.mimeType);
+        setHidden("photoData" + i, p.data);
+      }
+    } else {
+      setHidden("photoCount", "0");
+    }
+
+    statusBox.textContent = "접수 중...";
+    btn.textContent = "접수 중...";
+
+    // submit()은 다시 submit 이벤트를 발생시키지 않으므로 무한루프가 없습니다.
+    form.submit();
+
+    // Apps Script 응답은 iframe의 postMessage로 돌아옵니다.
+    setTimeout(() => {
+      if (submitting) {
+        submitting = false;
+        btn.disabled = false;
+        btn.textContent = "견적 상담 신청하기";
+        statusBox.textContent = "";
+        errorBox.textContent =
+          "응답이 늦어지고 있습니다. 인터넷 연결을 확인한 뒤 다시 시도해주세요. " +
+          "이미 접수되었을 가능성이 있으므로 여러 번 누르지 마세요.";
+      }
+    }, 30000);
+
+  } catch (err) {
+    submitting = false;
+    btn.disabled = false;
+    btn.textContent = "견적 상담 신청하기";
+    statusBox.textContent = "";
+    errorBox.textContent = err.message || "사진 처리 중 오류가 발생했습니다.";
   }
 });
 </script>
